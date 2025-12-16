@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Top Bar: Film Strip -->
+  <rect x="20" y="10" width="60" height="15" rx="2" />
+  <path d="M25 10 V25 M35 10 V25 M45 10 V25 M55 10 V25 M65 10 V25 M75 10 V25" />
+  
+  <!-- Stem: Tripod Legs/Center Column -->
+  <path d="M50 25 V80" stroke-width="4" />
+  <path d="M50 35 L35 75" />
+  <path d="M50 35 L65 75" />
+
+  <!-- Bottom Bar: Camera Body Base -->
+  <rect x="20" y="80" width="60" height="10" rx="2" />
+  <path d="M20 85 H80" />
+</svg>

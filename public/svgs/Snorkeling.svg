@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Top Bar: Surface Water -->
+  <path d="M20 20 Q35 15 50 20 Q65 25 80 20" />
+  <path d="M20 25 Q35 20 50 25 Q65 30 80 25" />
+
+  <!-- Stem: Snorkel Tube -->
+  <path d="M50 25 V80" stroke-width="5" />
+  <path d="M50 30 L60 25" />
+
+  <!-- Bottom Bar: Mask/Goggles -->
+  <path d="M20 80 H80" stroke-width="2" />
+  <rect x="30" y="75" width="20" height="10" rx="2" />
+  <rect x="50" y="75" width="20" height="10" rx="2" />
+</svg>

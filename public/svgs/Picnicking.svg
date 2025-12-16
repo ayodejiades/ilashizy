@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Top Bar: Tree Canopy -->
+  <path d="M20 20 Q35 5 50 20 Q65 5 80 20" />
+  <path d="M20 20 Q50 30 80 20" />
+
+  <!-- Stem: Tree Trunk -->
+  <path d="M50 25 V80" stroke-width="6" />
+  <path d="M50 40 L60 30" />
+  <path d="M50 50 L40 40" />
+
+  <!-- Bottom Bar: Picnic Blanket -->
+  <rect x="20" y="80" width="60" height="10" />
+  <path d="M25 80 V90 M35 80 V90 M45 80 V90 M55 80 V90 M65 80 V90 M75 80 V90" />
+  <path d="M20 85 H80" />
+</svg>
