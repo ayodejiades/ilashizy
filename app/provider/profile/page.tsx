@@ -19,7 +19,7 @@ export default async function ProviderProfilePage() {
       <nav className="border-b border-border bg-white dark:bg-slate-900 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold text-primary">
-            🏖️ Ilashizzy
+            ILASHIZY
           </Link>
           <div className="flex items-center gap-6">
             <Link href="/provider/dashboard" className="text-foreground hover:text-primary">

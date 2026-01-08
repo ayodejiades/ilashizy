@@ -13,7 +13,13 @@ export const translations = {
     "nav.signOut": "Sign Out",
     "nav.dashboard": "Dashboard",
     "nav.profile": "Profile",
+    "nav.settings": "Settings",
     "nav.guidelines": "Guidelines",
+    "nav.notifications": "Notifications",
+    "nav.bookings": "Bookings",
+    "nav.calendar": "Calendar",
+    "nav.sustainability": "Sustainability",
+    "nav.partners": "Partners",
 
     // Homepage - Hero
     "home.title": "Welcome to Ilashe Beach",
@@ -123,16 +129,34 @@ export const translations = {
 
     // Auth
     "auth.login": "Login",
-    "auth.signIn": "Sign in to your Ilashizzy account",
-    "auth.signUp": "Join Ilashizzy",
-    "auth.createAccount": "Create your community account",
+    "auth.signIn": "Sign in",
+    "auth.signUp": "Sign up",
+    "auth.createAccount": "Create account",
     "auth.email": "Email",
     "auth.password": "Password",
-    "auth.displayName": "Display Name",
-    "auth.repeatPassword": "Repeat Password",
+    "auth.displayName": "Display name",
+    "auth.repeatPassword": "Repeat password",
     "auth.haveAccount": "Already have an account?",
     "auth.noAccount": "Don't have an account?",
     "auth.passwordsNotMatch": "Passwords do not match",
+
+    // Activity Types
+    "activity.surfing": "Surfing",
+    "activity.canoeing": "Canoeing",
+    "activity.photography": "Photography",
+    "activity.diving": "Diving",
+    "activity.fishing": "Fishing",
+    "activity.beach-walks": "Beach Walks",
+    "activity.picnicking": "Picnicking",
+    "activity.meditation": "Meditation",
+    "activity.kayaking": "Kayaking",
+    "activity.snorkeling": "Snorkeling",
+    "activity.kite-surfing": "Kite Surfing",
+    "activity.horse-riding": "Horse Riding",
+    "activity.available": "Available",
+    "activity.unavailable": "Unavailable",
+    "activity.enable": "Enable",
+    "activity.disable": "Disable",
   },
   yo: {
     // Header & Navigation
@@ -148,7 +172,13 @@ export const translations = {
     "nav.signOut": "Jade",
     "nav.dashboard": "Pátákó",
     "nav.profile": "Profaili",
+    "nav.settings": "Eto",
     "nav.guidelines": "Awọn Ilana",
+    "nav.notifications": "Ìfitónilétí",
+    "nav.bookings": "Iwe-iwọle",
+    "nav.calendar": "Kalẹnda",
+    "nav.sustainability": "Iduroṣinṣin",
+    "nav.partners": "Awọn alabaṣepọ",
 
     // Homepage - Hero
     "home.title": "Káàbọ̀ sí Ilashe Beach",
@@ -268,6 +298,24 @@ export const translations = {
     "auth.haveAccount": "Ṣe o ni akọọlẹ tẹlẹ?",
     "auth.noAccount": "Ṣe o ko ni akọọlẹ?",
     "auth.passwordsNotMatch": "Awọn ọrọ igbaniwọle ko baamu",
+
+    // Activity Types
+    "activity.surfing": "Sírífì",
+    "activity.canoeing": "Kánù",
+    "activity.photography": "Yíya Fọ́tò",
+    "activity.diving": "Wíwẹ̀ Abẹ́ Omi",
+    "activity.fishing": "Pípẹja",
+    "activity.beach-walks": "Rírìn Lẹ́bàá Òkun",
+    "activity.picnicking": "Píkíníkì",
+    "activity.meditation": "Àṣàrò",
+    "activity.kayaking": "Káyákì",
+    "activity.snorkeling": "Snorkeling",
+    "activity.kite-surfing": "Kite Surfing",
+    "activity.horse-riding": "Gígẹin Ẹṣin",
+    "activity.available": "Wà",
+    "activity.unavailable": "Kò Sí",
+    "activity.enable": "Mú ṣiṣẹ",
+    "activity.disable": "Dẹkun",
   },
 }
 

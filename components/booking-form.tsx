@@ -51,7 +51,7 @@ export default function BookingForm({ activityId }: { activityId: string }) {
   if (success) {
     return (
       <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg text-center">
-        <p className="text-green-700 dark:text-green-400 font-semibold">Booking confirmed! ✓</p>
+        <p className="text-green-700 dark:text-green-400 font-semibold">Booking confirmed!</p>
         <p className="text-sm text-green-600 dark:text-green-500 mt-1">Check your dashboard for details</p>
       </div>
     )

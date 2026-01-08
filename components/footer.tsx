@@ -23,6 +23,8 @@ export function Footer() {
                             <li><Link href="/activities" className="hover:text-blue-400 transition-colors">{t("nav.activities")}</Link></li>
                             <li><Link href="/gallery" className="hover:text-blue-400 transition-colors">{t("nav.gallery")}</Link></li>
                             <li><Link href="/guidelines" className="hover:text-blue-400 transition-colors">{t("nav.guidelines")}</Link></li>
+                            <li><Link href="/sustainability" className="hover:text-green-400 transition-colors">{t("nav.sustainability")}</Link></li>
+                            <li><Link href="/partners/directory" className="hover:text-amber-400 transition-colors">{t("nav.partners")}</Link></li>
                         </ul>
                     </div>
                     <div>

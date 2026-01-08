@@ -8,7 +8,7 @@ export default function GuidelinesPage() {
       <nav className="border-b border-border bg-white dark:bg-slate-900">
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold text-primary">
-            🏖️ Ilashizzy
+            ILASHIZY
           </Link>
           <Link href="/" className="text-foreground hover:text-primary">
             Back to Home

@@ -4,16 +4,19 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(0.98 0.01 70);
-  --foreground: oklch(0.15 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0 0);
+  --background: oklch(0.97 0.02 85);
+  /* Warm sand tint */
+  --foreground: oklch(0.15 0.02 85);
+  --card: oklch(0.98 0.01 85);
+  --card-foreground: oklch(0.15 0.02 85);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0 0);
-  --primary: oklch(0.55 0.2 250);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.68 0.18 45);
-  --secondary-foreground: oklch(0.15 0 0);
+  --primary: oklch(0.48 0.16 250);
+  /* Deep Ocean */
+  --primary-foreground: oklch(0.98 0.01 85);
+  --secondary: oklch(0.92 0.04 85);
+  /* Sand */
+  --secondary-foreground: oklch(0.25 0.02 85);
   --muted: oklch(0.92 0.01 70);
   --muted-foreground: oklch(0.5 0 0);
   --accent: oklch(0.65 0.2 20);
@@ -123,56 +126,129 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 
   @keyframes float {
+
     0%,
     100% {
       transform: translateY(0px) rotate(var(--rotation, 0deg));
     }
+
     50% {
       transform: translateY(-20px) rotate(var(--rotation, 0deg));
     }
   }
 
+  @keyframes grain {
+
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+
+    10% {
+      transform: translate(-5%, -10%);
+    }
+
+    20% {
+      transform: translate(-15%, 5%);
+    }
+
+    30% {
+      transform: translate(7%, -25%);
+    }
+
+    40% {
+      transform: translate(-5%, 25%);
+    }
+
+    50% {
+      transform: translate(-15%, 10%);
+    }
+
+    60% {
+      transform: translate(15%, 0%);
+    }
+
+    70% {
+      transform: translate(0%, 15%);
+    }
+
+    80% {
+      transform: translate(3%, 35%);
+    }
+
+    90% {
+      transform: translate(-10%, 10%);
+    }
+  }
+
+  .bg-adire {
+    background-color: #f8fafc;
+    background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.3'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .bg-ankara {
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ea580c' fill-opacity='0.15'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
   @keyframes bounce-subtle {
+
     0%,
     100% {
       transform: translateY(0) scale(1);
     }
+
     50% {
       transform: translateY(-8px) scale(1.02);
     }
   }
 
   @keyframes wave {
+
     0%,
     100% {
       transform: translateX(0) translateY(0);
     }
+
     25% {
       transform: translateX(5px) translateY(-5px);
     }
+
     50% {
       transform: translateX(0) translateY(0);
     }
+
     75% {
       transform: translateX(-5px) translateY(5px);
     }
   }
 }
 
-h1, h2, h3, h4, h5, h6,
+h1,
 .brand-title,
+.hero-text,
 .section-heading {
-  font-family: var(--font-aladin); /* Aladin */
+  font-family: var(--font-aladin);
+  /* Aladin */
   font-weight: bold;
 }
 
-body, p, a, button, input, textarea, label, li {
-  font-family: var(--font-lato); /* Lato */
+body,
+p,
+a,
+button,
+input,
+textarea,
+label,
+li {
+  font-family: var(--font-lato);
+  /* Lato */
   font-weight: 400;
   line-height: 1.6;
 }
@@ -181,6 +257,7 @@ body, p, a, button, input, textarea, label, li {
   0% {
     transform: translateX(-100vw);
   }
+
   100% {
     transform: translateX(100vw);
   }
@@ -190,6 +267,7 @@ body, p, a, button, input, textarea, label, li {
   0% {
     transform: translateX(100vw);
   }
+
   100% {
     transform: translateX(-100vw);
   }

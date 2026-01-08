@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Map, Navigation, Maximize2, Minimize2, MapPin, Waves } from "lucide-react"
 
 export function InteractiveMap() {
   const mapRef = useRef<HTMLDivElement>(null)
@@ -45,8 +47,8 @@ export function InteractiveMap() {
             gatherings.
           </p>
           <div className="flex gap-4 text-sm">
-            <span className="text-muted-foreground">📍 GPS: 6.5°N, 3.3°E</span>
-            <span className="text-muted-foreground">🌊 Ideal Visit: Oct-Dec</span>
+            <span className="text-muted-foreground flex items-center gap-1"><MapPin className="w-4 h-4" /> GPS: 6.5°N, 3.3°E</span>
+            <span className="text-muted-foreground flex items-center gap-1"><Waves className="w-4 h-4" /> Ideal Visit: Oct-Dec</span>
           </div>
         </div>
       </CardContent>

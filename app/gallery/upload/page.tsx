@@ -8,8 +8,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea" // Changed from manual textarea to component
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
+import { ArrowLeft } from "lucide-react" // Added ArrowLeft import
 
 export default function UploadPhotoPage() {
   const [title, setTitle] = useState("")
@@ -52,7 +54,7 @@ export default function UploadPhotoPage() {
       <nav className="border-b border-border bg-white dark:bg-slate-900 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold text-primary">
-            🏖️ Ilashizzy
+            ILASHIZY
           </Link>
           <div className="flex items-center gap-6">
             <Link href="/gallery" className="text-foreground hover:text-primary">
@@ -70,7 +72,7 @@ export default function UploadPhotoPage() {
       {/* Upload Form */}
       <section className="max-w-2xl mx-auto px-6 md:px-12 py-12">
         <Link href="/gallery" className="text-primary hover:underline mb-6 inline-block">
-          ← Back to Gallery
+          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Gallery
         </Link>
 
         <Card>

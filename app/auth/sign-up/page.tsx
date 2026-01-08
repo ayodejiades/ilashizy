@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"
 import Link from "next/link"
 import { useRouter } from 'next/navigation'
 import { useState } from "react"
+import { toast } from "sonner"
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("")
@@ -17,7 +18,6 @@ export default function SignUpPage() {
   const [repeatPassword, setRepeatPassword] = useState("")
   const [displayName, setDisplayName] = useState("")
   const [role, setRole] = useState<"guest" | "service_provider">("guest")
-  const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
@@ -25,10 +25,9 @@ export default function SignUpPage() {
     e.preventDefault()
     const supabase = createClient()
     setIsLoading(true)
-    setError(null)
 
     if (password !== repeatPassword) {
-      setError("Passwords do not match")
+      toast.error("Passwords do not match")
       setIsLoading(false)
       return
     }
@@ -49,10 +48,11 @@ export default function SignUpPage() {
       if (signUpError) throw signUpError
 
       if (data.user) {
+        toast.success("Account created! Please check your email for verification.")
         router.push(`/auth/sign-up-success?role=${role}`)
       }
-    } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred")
+    } catch (error: any) {
+      toast.error(error.message || "Failed to create account")
     } finally {
       setIsLoading(false)
     }
@@ -145,7 +145,6 @@ export default function SignUpPage() {
                   </label>
                 </div>
               </div>
-              {error && <p className="text-sm text-red-500 font-medium bg-red-50 p-3 rounded-lg">{error}</p>}
               <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-6 rounded-full text-lg shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5" disabled={isLoading}>
                 {isLoading ? "Creating account..." : "Sign Up"}
               </Button>

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { createClient } from "@/lib/supabase/server"
 import { Footer } from "@/components/footer"
+import { Header } from "@/components/header"
 
 export default async function GalleryPage() {
   const supabase = await createClient()
@@ -27,23 +28,8 @@ export default async function GalleryPage() {
   return (
     <main className="min-h-screen bg-slate-50 selection:bg-cyan-300 selection:text-blue-900">
       {/* Header - Matching Landing Page */}
-      <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-300 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
-          <Link href="/" className="text-3xl brand-title text-blue-600 tracking-wider hover:opacity-80 transition-opacity font-aladin">ILASHIZY</Link>
-          <div className="hidden md:flex gap-8">
-            <Link href="/activities" className="text-slate-700 hover:text-blue-600 transition-colors text-lg font-bold">Activities</Link>
-            <Link href="/tips" className="text-slate-700 hover:text-blue-600 transition-colors text-lg font-bold">Tips</Link>
-            <Link href="/dashboard" className="text-slate-700 hover:text-blue-600 transition-colors text-lg font-bold">Dashboard</Link>
-          </div>
-          <div className="flex items-center gap-3">
-            <form action="/api/auth/logout" method="POST">
-              <Button className="bg-blue-600 text-white hover:bg-blue-700 px-6 py-2 text-lg font-bold rounded-full transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 border-none">
-                Sign Out
-              </Button>
-            </form>
-          </div>
-        </div>
-      </header>
+      {/* Header - Matching Landing Page */}
+      <Header />
 
       {/* Gallery Content */}
       <section className="max-w-7xl mx-auto px-6 md:px-12 pt-40 pb-12">
@@ -79,7 +65,7 @@ export default async function GalleryPage() {
                   <p className="text-slate-600 line-clamp-2 mb-6 leading-relaxed">{photo.description}</p>
                   <div className="flex items-center justify-between pt-4 border-t border-slate-100">
                     <span className="text-sm font-bold text-slate-400 flex items-center gap-1">
-                      <span className="text-red-500">❤️</span> {photo.likes_count || 0} likes
+                      <span className="text-red-500">Likes:</span> {photo.likes_count || 0} likes
                     </span>
                     <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-800 hover:bg-blue-50 font-bold">
                       View Details
@@ -92,7 +78,7 @@ export default async function GalleryPage() {
         ) : (
           <div className="text-center py-24 bg-white rounded-[3rem] border border-dashed border-slate-200 shadow-sm">
             <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span className="text-4xl">📸</span>
+              <span className="text-4xl text-slate-400">Gallery</span>
             </div>
             <h3 className="text-2xl font-bold text-slate-900 mb-2 font-aladin">No photos yet</h3>
             <p className="text-slate-500 mb-8">Be the first to share your beach moments!</p>

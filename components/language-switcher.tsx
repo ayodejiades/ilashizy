@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
+import { Globe } from "lucide-react"
 import { LANGUAGES, type Language } from "@/lib/use-language"
 
 export function LanguageSwitcher() {
@@ -29,7 +30,7 @@ export function LanguageSwitcher() {
   if (!mounted) {
     return (
       <Button variant="outline" size="sm" className="gap-2">
-        🌐 English
+        <Globe className="w-4 h-4" /> English
       </Button>
     )
   }
@@ -37,7 +38,7 @@ export function LanguageSwitcher() {
   return (
     <div className="relative">
       <Button variant="outline" size="sm" onClick={() => setIsOpen(!isOpen)} className="gap-2">
-        🌐 {LANGUAGES[currentLang]}
+        <Globe className="w-4 h-4" /> {LANGUAGES[currentLang]}
       </Button>
       {isOpen && (
         <div className="absolute top-full right-0 mt-2 bg-card border border-border rounded-lg shadow-lg z-50">

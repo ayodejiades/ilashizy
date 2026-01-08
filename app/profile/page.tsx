@@ -8,12 +8,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { User, Mail, Calendar, MapPin, Edit2, Camera, Star, LogOut } from "lucide-react"
+import { Calendar, MapPin, Edit2, Camera, Star, LogOut, Trophy, Waves, Compass, Heart, Sun, Medal } from "lucide-react"
 import { Aladin } from 'next/font/google'
 import { Footer } from "@/components/footer"
+import { Header } from "@/components/header"
 
 const aladin = Aladin({
   weight: '400',
@@ -25,6 +26,7 @@ export default function ProfilePage() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
+  const [userBadges, setUserBadges] = useState<any[]>([])
   const [profileData, setProfileData] = useState({
     display_name: "",
     bio: "",
@@ -41,7 +43,8 @@ export default function ProfilePage() {
         router.push("/auth/login")
       } else {
         setUser(user)
-        // Fetch additional profile data if it exists in a separate table
+
+        // Fetch Profile
         const { data: profile } = await supabase
           .from('profiles')
           .select('*')
@@ -63,6 +66,14 @@ export default function ProfilePage() {
             website: ""
           })
         }
+
+        // Fetch Badges
+        const { data: badges } = await supabase
+          .from('user_badges')
+          .select('*, badges(*)')
+          .eq('user_id', user.id)
+
+        setUserBadges(badges || [])
       }
       setLoading(false)
     }
@@ -83,7 +94,6 @@ export default function ProfilePage() {
 
       if (error) throw error
 
-      // Also update auth metadata for display name
       if (profileData.display_name !== user.user_metadata?.display_name) {
         await supabase.auth.updateUser({
           data: { display_name: profileData.display_name }
@@ -91,7 +101,6 @@ export default function ProfilePage() {
       }
 
       setIsEditing(false)
-      // Show success message (could add toast here)
     } catch (error) {
       console.error('Error updating profile:', error)
     }
@@ -112,28 +121,56 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-slate-50 selection:bg-cyan-300 selection:text-blue-900">
-      {/* Header - Matching Landing Page */}
-      <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-300 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
-          <Link href="/" className={`text-3xl brand-title text-blue-600 tracking-wider hover:opacity-80 transition-opacity ${aladin.className}`}>ILASHIZY</Link>
-          <div className="hidden md:flex gap-8">
-            <Link href="/dashboard" className="text-slate-700 hover:text-blue-600 transition-colors text-lg font-bold">Dashboard</Link>
-            <Link href="/activities" className="text-slate-700 hover:text-blue-600 transition-colors text-lg font-bold">Activities</Link>
-            <Link href="/gallery" className="text-slate-700 hover:text-blue-600 transition-colors text-lg font-bold">Gallery</Link>
-          </div>
-          <div className="flex items-center gap-3">
-            <Button
-              onClick={handleSignOut}
-              className="bg-blue-600 text-white hover:bg-blue-700 px-6 py-2 text-lg font-bold rounded-full transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 border-none"
-            >
-              <LogOut className="w-5 h-5 mr-2" />
-              Sign Out
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="pt-32 pb-12 px-6 md:px-12 max-w-7xl mx-auto">
+
+        {/* Badges Section */}
+        <section className="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-100 mb-12 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-yellow-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+          <div className="flex items-center justify-between mb-6 relative z-10">
+            <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+              <Trophy className="w-6 h-6 text-yellow-500" /> Achievements
+            </h2>
+            <span className="bg-blue-100 text-blue-700 py-1 px-3 rounded-full text-xs font-bold uppercase tracking-wider">
+              {userBadges.length} Earned
+            </span>
+          </div>
+
+          {userBadges && userBadges.length > 0 ? (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 relative z-10">
+              {userBadges.map((ub: any) => (
+                <div key={ub.id} className="flex flex-col items-center text-center p-4 bg-slate-50 rounded-2xl border border-slate-100 hover:shadow-md transition-shadow">
+                  <div className="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center text-3xl mb-3 border-2 border-yellow-100">
+                    {/* Map icon text to emoji/icon for now */}
+                    {ub.badges.icon === 'Waves' ? <Waves className="w-8 h-8 text-blue-500" /> :
+                      ub.badges.icon === 'Compass' ? <Compass className="w-8 h-8 text-orange-500" /> :
+                        ub.badges.icon === 'Heart' ? <Heart className="w-8 h-8 text-red-500" /> :
+                          ub.badges.icon === 'Sun' ? <Sun className="w-8 h-8 text-yellow-500" /> : <Medal className="w-8 h-8 text-purple-500" />}
+                  </div>
+                  <h3 className="font-bold text-slate-800 text-sm mb-1">{ub.badges.name}</h3>
+                  <p className="text-xs text-slate-500 line-clamp-2">{ub.badges.description}</p>
+                  <p className="text-[10px] text-slate-400 mt-2 uppercase tracking-wide">
+                    {new Date(ub.earned_at).toLocaleDateString()}
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-8 relative z-10">
+              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
+                <Trophy className="w-8 h-8" />
+              </div>
+              <p className="text-slate-500 mb-4 font-medium">You haven't earned any badges yet.</p>
+              <Link href="/activities">
+                <Button variant="link" className="text-blue-600 font-bold">
+                  Book activities to unlock achievements! &rarr;
+                </Button>
+              </Link>
+            </div>
+          )}
+        </section>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile Sidebar */}
           <div className="lg:col-span-1 space-y-6">
@@ -225,8 +262,8 @@ export default function ProfilePage() {
             {/* Quick Stats */}
             <div className="grid grid-cols-3 gap-4">
               <Card className="rounded-2xl border-none shadow-md bg-white/60 backdrop-blur-sm p-4 text-center hover:-translate-y-1 transition-transform duration-300">
-                <div className="text-2xl font-bold text-blue-600">0</div>
-                <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Bookings</div>
+                <div className="text-2xl font-bold text-blue-600">{userBadges.length}</div>
+                <div className="text-xs text-slate-500 font-medium uppercase tracking-wider">Badges</div>
               </Card>
               <Card className="rounded-2xl border-none shadow-md bg-white/60 backdrop-blur-sm p-4 text-center hover:-translate-y-1 transition-transform duration-300">
                 <div className="text-2xl font-bold text-cyan-600">0</div>

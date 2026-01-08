@@ -13,7 +13,7 @@ export default function VirtualTourPage() {
       id: 0,
       title: "Beach Entrance",
       description: "Welcome to Ilashe Beach! This is where your adventure begins.",
-      icon: "🚪",
+      icon: "Entry",
       details: [
         "White sand beach stretching for miles",
         "Welcoming beach huts and facilities",
@@ -24,35 +24,35 @@ export default function VirtualTourPage() {
       id: 1,
       title: "Golden Hour Sunset",
       description: "Witness the breathtaking sunset at Ilashe Beach during golden hour.",
-      icon: "🌅",
+      icon: "Sunset",
       details: ["Stunning orange and pink skies", "Perfect photography spot", "Best time: 5:30 PM - 7:00 PM"],
     },
     {
       id: 2,
       title: "Water Activities Zone",
       description: "Where tourists enjoy boat tours and water sports.",
-      icon: "🚤",
+      icon: "Water",
       details: ["Boat tour departure point", "Watersport equipment rental", "Safety briefing area"],
     },
     {
       id: 3,
       title: "Local Market",
       description: "Vibrant community market with local crafts and food.",
-      icon: "🏪",
+      icon: "Market",
       details: ["Fresh seafood and local delicacies", "Handmade crafts and souvenirs", "Open daily from 6 AM - 8 PM"],
     },
     {
       id: 4,
       title: "Beachside Dining",
       description: "Enjoy delicious meals with a view at beachside restaurants.",
-      icon: "🍽️",
+      icon: "Dining",
       details: ["Fresh grilled fish and local cuisine", "Ocean view seating", "Live music on weekends"],
     },
     {
       id: 5,
       title: "Community Gathering Spot",
       description: "Where locals and tourists gather for beach volleyball and picnics.",
-      icon: "👥",
+      icon: "Group",
       details: ["Beach volleyball courts", "Picnic areas with tables", "Evening gathering point"],
     },
   ]
@@ -65,7 +65,7 @@ export default function VirtualTourPage() {
       <nav className="border-b border-border bg-white dark:bg-slate-900 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold text-primary">
-            🏖️ Ilashizzy
+            ILASHIZY
           </Link>
           <div className="flex items-center gap-6">
             <Link href="/activities" className="text-foreground hover:text-primary">
@@ -119,9 +119,8 @@ export default function VirtualTourPage() {
                 <button
                   key={s.id}
                   onClick={() => setCurrentScene(s.id)}
-                  className={`p-4 rounded-lg border-2 transition-all text-left ${
-                    currentScene === s.id ? "border-primary bg-primary/10" : "border-border hover:border-primary"
-                  }`}
+                  className={`p-4 rounded-lg border-2 transition-all text-left ${currentScene === s.id ? "border-primary bg-primary/10" : "border-border hover:border-primary"
+                    }`}
                 >
                   <div className="text-3xl mb-2">{s.icon}</div>
                   <p className="font-semibold text-foreground text-sm">{s.title}</p>

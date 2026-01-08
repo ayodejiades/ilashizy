@@ -2,11 +2,12 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Aladin, Lato } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 
 const aladin = Aladin({
   subsets: ["latin"],
-  weight: "400", 
+  weight: "400",
   variable: "--font-aladin",
 })
 
@@ -31,6 +32,7 @@ export default function RootLayout({
     <html lang="en" className={`${aladin.variable} ${lato.variable}`}>
       <body className="font-lato antialiased">
         {children}
+        <Toaster />
         <Analytics />
       </body>
     </html>

@@ -4,6 +4,17 @@ import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { useTranslation } from "@/lib/use-translation"
+import { Waves, Ship, Camera, Fish, Footprints, Utensils, Flower2, Anchor, LifeBuoy } from "lucide-react"
+
+const ICON_MAP: Record<string, any> = {
+  Waves, Ship, Camera, Fish, Footprints, Utensils, Flower2, Anchor, LifeBuoy,
+  Beach: Waves, // Aliases for backward compatibility or different naming
+  Boat: Ship,
+  Photo: Camera,
+  Stay: LifeBuoy,
+  Group: Footprints
+}
 
 interface ActivityCardProps {
   id: string
@@ -11,7 +22,7 @@ interface ActivityCardProps {
   icon: string
   description: string
   available: boolean
-  userRole?: "tourist" | "service_provider"
+  userRole?: string
   onToggleAvailability?: (id: string, available: boolean) => void
 }
 
@@ -24,6 +35,9 @@ export function ActivityCard({
   userRole,
   onToggleAvailability,
 }: ActivityCardProps) {
+  const { t } = useTranslation()
+  const IconComponent = ICON_MAP[icon] || Waves
+
   return (
     <Card
       className={cn(
@@ -36,48 +50,48 @@ export function ActivityCard({
         {/* Large Icon */}
         <div
           className={cn(
-            "text-7xl md:text-8xl mb-8 transition-all duration-300 relative z-10",
-            available ? "hover:scale-125 hover:drop-shadow-lg" : "",
+            "mb-8 transition-all duration-300 relative z-10 p-6 rounded-3xl bg-slate-50",
+            available ? "text-blue-600 hover:scale-110" : "text-slate-300",
           )}
-          style={{
-            animation: available ? "bounce-subtle 3s ease-in-out infinite" : "none",
-            filter: "drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1))",
-          }}
         >
-          {icon}
+          <IconComponent size={64} strokeWidth={1.5} />
         </div>
 
         {/* Title */}
-        <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-3">{title}</h3>
+        <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 font-aladin">
+          {t(`activity.${id}` as any) || title}
+        </h3>
 
         {/* Availability Badge */}
         <div
           className={cn(
-            "text-sm font-semibold mb-4 px-3 py-1 rounded-full",
+            "text-sm font-bold mb-4 px-4 py-1.5 rounded-full uppercase tracking-wider",
             available
-              ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-100"
-              : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-100",
+              ? "bg-green-100 text-green-700"
+              : "bg-red-100 text-red-700",
           )}
         >
-          {available ? "Available" : "Currently Unavailable"}
+          {available ? t("activity.available" as any) : t("activity.unavailable" as any)}
         </div>
 
         {/* Description */}
-        <p className="text-muted-foreground mb-6 flex-grow text-base">{description}</p>
+        <p className="text-slate-500 mb-6 flex-grow text-base">
+          {description}
+        </p>
 
         {/* Actions */}
         {userRole === "service_provider" && onToggleAvailability ? (
           <Button
             variant={available ? "default" : "outline"}
             onClick={() => onToggleAvailability(id, !available)}
-            className="w-full"
+            className="w-full rounded-full py-6 font-bold"
           >
-            {available ? "Disable Activity" : "Enable Activity"}
+            {available ? t("activity.disable" as any) : t("activity.enable" as any)}
           </Button>
         ) : (
           <Link href={`/activities/${id}`} className="w-full">
-            <Button disabled={!available} className="w-full" variant={available ? "default" : "outline"}>
-              {available ? "View Details" : "Unavailable"}
+            <Button disabled={!available} className="w-full rounded-full py-6 font-bold" variant={available ? "default" : "outline"}>
+              {available ? t("activities.viewActivities" as any) : t("activity.unavailable" as any)}
             </Button>
           </Link>
         )}

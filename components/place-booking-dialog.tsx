@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
+import { checkAndAwardBadges } from "@/app/actions/gamification"
 import {
     Dialog,
     DialogContent,
@@ -75,6 +76,14 @@ export function PlaceBookingDialog({ place, activityId, activityTitle }: PlaceBo
             }
 
             setSuccess(true)
+
+            // Check for badges
+            try {
+                await checkAndAwardBadges(user.id)
+            } catch (error) {
+                console.error("Failed to check badges", error)
+            }
+
             setTimeout(() => {
                 setOpen(false)
                 setSuccess(false)
@@ -109,7 +118,7 @@ export function PlaceBookingDialog({ place, activityId, activityTitle }: PlaceBo
                 {success ? (
                     <div className="py-8 text-center">
                         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span className="text-3xl">✓</span>
+                            <span className="text-3xl text-green-600 font-bold">Done</span>
                         </div>
                         <h3 className="text-xl font-bold text-green-600 mb-2">Booking Confirmed!</h3>
                         <p className="text-slate-600">Check your dashboard to view your booking details.</p>

@@ -8,6 +8,7 @@ import { WeatherWidget } from "@/components/weather-widget"
 import { InteractiveMap } from "@/components/interactive-map"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { useTranslation } from "@/lib/use-translation"
+import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import {
   Search,
@@ -17,9 +18,11 @@ import {
   Ship,
   Facebook,
   Instagram,
-  Twitter
+  Twitter,
+  ArrowRight
 } from "lucide-react"
 
+import { useRouter } from "next/navigation"
 import { activities } from "@/lib/data"
 
 const testimonials = [
@@ -31,57 +34,47 @@ const testimonials = [
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("")
   const { t } = useTranslation()
+  const router = useRouter()
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
+    }
+  }
 
   return (
     <main className="w-full bg-slate-50 min-h-screen flex flex-col selection:bg-cyan-300 selection:text-blue-900">
       {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-white/10 backdrop-blur-xl border-b border-white/20 transition-all duration-300 shadow-lg ring-1 ring-black/5">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
-          <div className="text-3xl brand-title text-blue-600 tracking-wider">ILASHIZY</div>
-          <div className="hidden md:flex gap-8">
-            <Link href="/" className="text-slate-700 hover:text-blue-600 transition-colors text-lg font-bold">Home</Link>
-            <Link href="/about" className="text-slate-700 hover:text-blue-600 transition-colors text-lg font-bold">About</Link>
-            <Link href="/blog" className="text-slate-700 hover:text-blue-600 transition-colors text-lg font-bold">Blog</Link>
-            <Link href="/contact" className="text-slate-700 hover:text-blue-600 transition-colors text-lg font-bold">Contact</Link>
-          </div>
-          <div className="flex items-center gap-3">
-            <LanguageSwitcher />
-            <Link href="/auth/login">
-              <Button className="bg-blue-600 text-white hover:bg-blue-700 px-8 py-2 text-lg font-bold rounded-full transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 border-none">
-                {t("nav.signIn")}
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Header />
 
-      {/* Hero Section */}
-      <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
+      {/* Asymmetrical Hero Section */}
+      <section className="relative h-screen min-h-[800px] flex items-end pb-24 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: "url('/images/ilashe.jpg')" }}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-900/40 via-black/20 to-blue-900/60 mix-blend-multiply"></div>
-          <div className="absolute inset-0 bg-black/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-black/10"></div>
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center pt-20">
-          <p className="text-cyan-300 text-xl md:text-2xl font-bold tracking-[0.2em] uppercase mb-4 animate-fade-in-up drop-shadow-md">{t("home.title").split(" ").slice(0, 2).join(" ")} </p>
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-white mb-8 tracking-tight drop-shadow-2xl animate-fade-in-up delay-100 section-heading">
-            ILASHE BEACH
-          </h1>
-          <p className="text-2xl md:text-3xl text-white max-w-3xl mx-auto leading-relaxed font-semibold mb-12 animate-fade-in-up delay-200 drop-shadow-lg">
-            {t("home.subtitle")}
-          </p>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full">
+          <div className="max-w-4xl">
+            <p className="text-sand-300 text-lg md:text-xl font-bold tracking-[0.3em] uppercase mb-6 animate-fade-in-up">
+              {t("home.title").split(" ").slice(0, 2).join(" ")}
+            </p>
+            <h1 className="text-8xl md:text-[10rem] leading-[0.8] font-bold text-white mb-8 tracking-tighter animate-fade-in-up delay-100 font-aladin">
+              ILASHE<br />BEACH
+            </h1>
+            <p className="text-xl md:text-2xl text-slate-200 max-w-xl leading-relaxed font-light mb-12 animate-fade-in-up delay-200 border-l-4 border-blue-500 pl-6">
+              {t("home.subtitle")}
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Plan Your Visit (Weather) */}
       <section className="py-24 bg-gradient-to-br from-blue-50 via-white to-cyan-50 relative overflow-hidden">
-        {/* Mesh Gradient Blobs */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-200/30 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-cyan-200/30 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2"></div>
-
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
@@ -101,7 +94,6 @@ export default function Home() {
               </div>
             </div>
             <div className="relative transform hover:scale-[1.02] transition-transform duration-500">
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-[2rem] opacity-30 blur-2xl animate-pulse"></div>
               <div className="relative">
                 <WeatherWidget />
               </div>
@@ -110,14 +102,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Activities Section */}
-      <section id="activities" className="py-32 bg-slate-50 relative">
+      {/* Activities Section - Masonry Grid */}
+      <section id="activities" className="py-32 relative bg-adire">
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-6xl font-bold text-slate-900 mb-6 section-heading">{t("home.discoverActivities")}</h2>
-            <p className="text-slate-500 text-xl max-w-2xl mx-auto font-medium">
-              {t("home.activitiesDesc")}
-            </p>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+            <div className="max-w-2xl">
+              <h2 className="text-6xl md:text-7xl font-bold text-slate-900 mb-6 font-aladin">{t("home.discoverActivities")}</h2>
+              <p className="text-slate-500 text-xl font-light">
+                {t("home.activitiesDesc")}
+              </p>
+            </div>
+            <Link href="/activities">
+              <Button variant="outline" className="rounded-full px-8 py-6 text-lg hover:bg-slate-900 hover:text-white transition-all">
+                {t("home.exploreActivities")}
+              </Button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
@@ -125,31 +124,27 @@ export default function Home() {
               <Link
                 key={activity.id}
                 href={`/activities/${activity.id}`}
-                className="group relative block h-80"
+                className="group relative block aspect-[4/5] rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${activity.color} rounded-[2rem] p-[2px] shadow-lg transition-all duration-500 group-hover:shadow-2xl group-hover:-translate-y-2 group-hover:scale-[1.02]`}>
-                  <div className="absolute inset-0 bg-white/90 backdrop-blur-xl rounded-[1.9rem] flex flex-col items-center justify-center p-6 transition-all duration-500 overflow-hidden">
-
-                    {/* Icon Container - Slides up on hover */}
-                    <div className="transform transition-all duration-500 group-hover:-translate-y-8 group-hover:scale-90 relative z-10">
+                <div className={`absolute inset-0 bg-gradient-to-br ${activity.color} p-[2px]`}>
+                  <div className="absolute inset-0 bg-white flex flex-col items-center justify-center p-6 text-center group-hover:bg-white/95 transition-colors">
+                    <div className="w-3/5 h-3/5 mb-4 transform group-hover:scale-110 transition-transform duration-500 flex items-center justify-center">
                       {activity.svg ? (
                         <img
                           src={activity.svg}
                           alt={activity.title}
-                          className="w-28 h-28 object-contain drop-shadow-md"
+                          className="w-full h-full object-contain"
                         />
                       ) : (
-                        <activity.icon className="w-20 h-20 text-slate-400 group-hover:text-blue-600 transition-colors" strokeWidth={1.5} />
+                        <activity.icon className="w-full h-full text-slate-800" strokeWidth={1} />
                       )}
                     </div>
-
-                    {/* Title - Slides in from bottom on hover */}
                     <div className="absolute bottom-0 left-0 right-0 p-6 text-center transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out z-20 bg-white/50 backdrop-blur-sm">
-                      <span className="text-slate-900 font-bold text-2xl tracking-wide block font-aladin">
-                        {activity.title}
+                      <span className="text-slate-900 font-bold text-2xl tracking-wide block">
+                        {t(`activity.${activity.id}` as any)}
                       </span>
                       <span className="text-blue-600 text-sm font-bold mt-2 block opacity-0 group-hover:opacity-100 transition-opacity delay-100 uppercase tracking-widest">
-                        Explore
+                        {t("activities.viewActivities")}
                       </span>
                     </div>
                   </div>
@@ -169,9 +164,8 @@ export default function Home() {
             <p className="text-slate-500 text-xl font-medium">{t("home.findProvidersDesc")}</p>
           </div>
           <div className="max-w-2xl mx-auto relative">
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full opacity-50 blur-md group-hover:opacity-100 transition duration-500"></div>
-              <div className="relative bg-white rounded-full flex items-center">
+            <form onSubmit={handleSearch} className="relative group">
+              <div className="relative bg-white rounded-full flex items-center border border-slate-200 shadow-sm focus-within:shadow-md transition-shadow">
                 <Search className="absolute left-6 text-slate-400 w-6 h-6" />
                 <Input
                   type="text"
@@ -181,24 +175,27 @@ export default function Home() {
                   className="w-full pl-16 pr-6 py-8 border-none rounded-full text-xl text-slate-800 placeholder-slate-400 focus:ring-0 bg-transparent shadow-none"
                 />
               </div>
-            </div>
+              <button type="submit" className="sr-only">Search</button>
+            </form>
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="py-24 bg-slate-50 border-t border-slate-200">
+      <section className="py-24 relative bg-adire border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 section-heading">{t("home.communityStories")}</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((t) => (
-              <div key={t.id} className="bg-white p-8 rounded-[2rem] relative hover:shadow-xl transition-all duration-300 border border-slate-100 group">
-                <Quote className="w-12 h-12 text-blue-100 absolute top-6 left-6 group-hover:text-blue-200 transition-colors" />
+            {testimonials.map((t, index) => (
+              <div
+                key={t.id}
+                className={`bg-white p-8 rounded-[2rem] relative hover:shadow-xl transition-all duration-300 border border-slate-100 group ${index === 1 ? 'md:-translate-y-12' : index === 2 ? 'md:translate-y-12' : ''}`}
+              >
                 <p className="text-slate-600 text-lg leading-relaxed mb-8 relative z-10 pt-6 font-medium">"{t.text}"</p>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-md">
                     {t.name[0]}
                   </div>
                   <div>
@@ -253,8 +250,6 @@ export default function Home() {
       {/* Community Join Section */}
       <section className="bg-gradient-to-r from-blue-600 to-indigo-600 py-32 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-cyan-400 rounded-full blur-[128px] opacity-50"></div>
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-purple-400 rounded-full blur-[128px] opacity-50"></div>
 
         <div className="max-w-4xl mx-auto px-6 md:px-12 text-center relative z-10">
           <h2 className="text-5xl md:text-7xl font-bold mb-8 section-heading drop-shadow-lg">{t("home.joinOurCommunity")}</h2>
@@ -262,7 +257,7 @@ export default function Home() {
             {t("home.communityDesc")}
           </p>
           <Link href="/auth/sign-up">
-            <Button className="bg-white text-blue-600 hover:bg-blue-50 px-12 py-6 text-xl font-bold rounded-full shadow-[0_0_40px_rgba(255,255,255,0.4)] hover:shadow-[0_0_60px_rgba(255,255,255,0.6)] hover:-translate-y-1 transition-all border-4 border-transparent hover:border-blue-200">
+            <Button className="bg-white text-blue-600 hover:bg-blue-50 px-12 py-6 text-xl font-bold rounded-full shadow-lg hover:-translate-y-1 transition-all border-4 border-transparent hover:border-blue-200">
               {t("home.getStarted")}
             </Button>
           </Link>

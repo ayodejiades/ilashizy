@@ -1,21 +1,15 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Header } from "@/components/header"
+import { TrendingUp, Users, Sparkles } from "lucide-react"
 
 export default function PartnersPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-sky-50 to-white dark:from-slate-900 dark:to-slate-950">
       {/* Navigation */}
-      <nav className="border-b border-border bg-white dark:bg-slate-900">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold text-primary">
-            🏖️ Ilashizzy
-          </Link>
-          <Link href="/" className="text-foreground hover:text-primary">
-            Back to Home
-          </Link>
-        </div>
-      </nav>
+      {/* Navigation */}
+      <Header />
 
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-6 md:px-12 py-24">
@@ -34,7 +28,7 @@ export default function PartnersPage() {
           <div className="grid md:grid-cols-3 gap-8">
             <Card>
               <CardHeader>
-                <CardTitle className="text-2xl">📈 Grow Your Business</CardTitle>
+                <CardTitle className="text-2xl flex items-center gap-2"><TrendingUp className="w-6 h-6 text-green-500" /> Grow Your Business</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -45,7 +39,7 @@ export default function PartnersPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-2xl">🤝 Community Support</CardTitle>
+                <CardTitle className="text-2xl flex items-center gap-2"><Users className="w-6 h-6 text-blue-500" /> Community Support</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -56,7 +50,7 @@ export default function PartnersPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-2xl">✨ Visibility</CardTitle>
+                <CardTitle className="text-2xl flex items-center gap-2"><Sparkles className="w-6 h-6 text-yellow-500" /> Visibility</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">

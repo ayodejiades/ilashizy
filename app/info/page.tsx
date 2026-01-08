@@ -20,7 +20,7 @@ export default async function InfoPage() {
       <nav className="border-b border-border bg-white dark:bg-slate-900 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold text-primary">
-            🏖️ Ilashizzy
+            ILASHIZY
           </Link>
           <div className="flex items-center gap-6">
             <Link href="/activities" className="text-foreground hover:text-primary">
@@ -130,23 +130,23 @@ export default async function InfoPage() {
               <CardContent>
                 <ul className="space-y-3 text-muted-foreground">
                   <li className="flex gap-3">
-                    <span className="text-primary">✓</span>
+                    <span className="text-primary">-</span>
                     <span>Always swim in designated areas and respect lifeguard instructions</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="text-primary">✓</span>
+                    <span className="text-primary">-</span>
                     <span>Apply sunscreen regularly and wear protective clothing</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="text-primary">✓</span>
+                    <span className="text-primary">-</span>
                     <span>Stay hydrated throughout your beach visit</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="text-primary">✓</span>
+                    <span className="text-primary">-</span>
                     <span>Keep your belongings secure and avoid leaving valuables unattended</span>
                   </li>
                   <li className="flex gap-3">
-                    <span className="text-primary">✓</span>
+                    <span className="text-primary">-</span>
                     <span>Be aware of weather conditions and strong currents</span>
                   </li>
                 </ul>
