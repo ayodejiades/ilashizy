@@ -33,16 +33,45 @@ export async function updateSession(request: NextRequest) {
   const isPublicRoute = publicRoutes.some(route => request.nextUrl.pathname === route || request.nextUrl.pathname.startsWith(route + "/"))
   const isAuthRoute = request.nextUrl.pathname.startsWith("/auth")
   const isProviderRoute = request.nextUrl.pathname.startsWith("/provider")
+  
+  // Routes that allow anonymous guest access
+  const guestAllowedRoutes = [
+    "/dashboard",
+    "/bookings", 
+    "/activities",
+    "/tips",
+    "/profile",
+    "/settings",
+    "/calendar",
+    "/reviews",
+    "/gallery",
+    "/search",
+    "/virtual-tour",
+    "/info",
+    "/guidelines",
+    "/sustainability",
+    "/legal"
+  ]
+  const isGuestAllowedRoute = guestAllowedRoutes.some(route => 
+    request.nextUrl.pathname === route || request.nextUrl.pathname.startsWith(route + "/")
+  )
 
   // 1. Unauthenticated users:
-  // If NOT public route and NOT auth route -> redirect to login
-  if (!user && !isPublicRoute && !isAuthRoute) {
+  // If NOT public route, NOT auth route, and NOT guest-allowed route -> redirect to login
+  if (!user && !isPublicRoute && !isAuthRoute && !isGuestAllowedRoute) {
     const url = request.nextUrl.clone()
     url.pathname = "/auth/login"
     return NextResponse.redirect(url)
   }
 
-  // 2. Authenticated users:
+  // 2. Provider routes ALWAYS require authentication
+  if (isProviderRoute && !user) {
+    const url = request.nextUrl.clone()
+    url.pathname = "/auth/login"
+    return NextResponse.redirect(url)
+  }
+
+  // 3. Authenticated users:
   if (user) {
     const role = user.user_metadata?.role || "guest"
 
