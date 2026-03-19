@@ -10,6 +10,7 @@ import { Footer } from "@/components/footer"
 import { Calendar, Users, MapPin, X, Check, AlertCircle } from "lucide-react"
 import { places } from "@/lib/data"
 import { useTranslation } from "@/lib/use-translation"
+import { isAnonymousGuest, getAnonymousGuestId } from "@/lib/anonymous-guest"
 
 export default function BookingsPage() {
     const { t } = useTranslation()
@@ -21,18 +22,32 @@ export default function BookingsPage() {
     useEffect(() => {
         const fetchData = async () => {
             const { data: { user } } = await supabase.auth.getUser()
-            if (!user) {
+            const isAnon = await isAnonymousGuest()
+            if (!user && !isAnon) {
                 router.push("/auth/login")
                 return
             }
 
-            const { data: bookingsData } = await supabase
-                .from("place_bookings")
-                .select("*")
-                .eq("user_id", user.id)
-                .order("booking_date", { ascending: true })
+            let bookingsData: any[] = []
 
-            setBookings(bookingsData || [])
+            if (user) {
+                const { data } = await supabase
+                    .from("place_bookings")
+                    .select("*")
+                    .eq("user_id", user.id)
+                    .order("booking_date", { ascending: true })
+                bookingsData = data || []
+            } else if (isAnon) {
+                const guestId = getAnonymousGuestId()
+                const { data } = await supabase
+                    .from("place_bookings")
+                    .select("*")
+                    .eq("anonymous_guest_id", guestId)
+                    .order("booking_date", { ascending: true })
+                bookingsData = data || []
+            }
+
+            setBookings(bookingsData)
             setLoading(false)
         }
         fetchData()

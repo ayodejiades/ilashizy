@@ -10,6 +10,7 @@ import { Footer } from "@/components/footer"
 import { places } from "@/lib/data"
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, MapPin, Users } from "lucide-react"
 import { useTranslation } from "@/lib/use-translation"
+import { isAnonymousGuest, getAnonymousGuestId } from "@/lib/anonymous-guest"
 
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",
@@ -47,20 +48,35 @@ export default function CalendarPage() {
   useEffect(() => {
     const fetchData = async () => {
       const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
+      const isAnon = await isAnonymousGuest()
+      if (!user && !isAnon) {
         router.push("/auth/login")
         return
       }
       setUser(user)
 
-      const { data: bookingsData } = await supabase
-        .from("place_bookings")
-        .select("*")
-        .eq("user_id", user.id)
-        .gte("booking_date", `${currentYear}-01-01`)
-        .order("booking_date", { ascending: true })
+      let bookingsData: any[] = []
 
-      setBookings(bookingsData || [])
+      if (user) {
+        const { data } = await supabase
+          .from("place_bookings")
+          .select("*")
+          .eq("user_id", user.id)
+          .gte("booking_date", `${currentYear}-01-01`)
+          .order("booking_date", { ascending: true })
+        bookingsData = data || []
+      } else if (isAnon) {
+        const guestId = getAnonymousGuestId()
+        const { data } = await supabase
+          .from("place_bookings")
+          .select("*")
+          .eq("anonymous_guest_id", guestId)
+          .gte("booking_date", `${currentYear}-01-01`)
+          .order("booking_date", { ascending: true })
+        bookingsData = data || []
+      }
+
+      setBookings(bookingsData)
       setLoading(false)
     }
     fetchData()

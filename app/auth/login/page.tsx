@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getOrCreateAnonymousGuest } from "@/lib/anonymous-guest";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -76,6 +77,20 @@ export default function LoginPage() {
     } catch (error: any) {
       toast.error(error.message || "Failed to send magic link");
     } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGuestLogin = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      await getOrCreateAnonymousGuest();
+      toast.success("Continuing as passenger...");
+      router.push("/activities");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to start guest session.");
       setIsLoading(false);
     }
   };
@@ -148,7 +163,6 @@ export default function LoginPage() {
                         </Label>
                         <Link
                           href="/auth/forgot-password"
-                          weights="bold"
                           className="text-sm text-blue-600 font-bold hover:underline"
                         >
                           Forgot?
@@ -231,14 +245,14 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <Link href="/activities">
-              <Button
-                variant="outline"
-                className="w-full border-2 border-blue-200 text-blue-600 hover:bg-blue-50 font-bold py-6 rounded-full text-lg transition-all"
-              >
-                Continue as Guest
-              </Button>
-            </Link>
+            <Button
+              variant="outline"
+              onClick={handleGuestLogin}
+              disabled={isLoading}
+              className="w-full border-2 border-blue-200 text-blue-600 hover:bg-blue-50 font-bold py-6 rounded-full text-lg transition-all"
+            >
+              Continue as Guest
+            </Button>
             <p className="text-xs text-slate-400 italic">
               No account needed! Browse and book activities anonymously.
             </p>

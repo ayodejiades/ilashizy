@@ -15,6 +15,7 @@ import { Calendar, MapPin, Edit2, Camera, Star, LogOut, Trophy, Waves, Compass, 
 import { Aladin } from 'next/font/google'
 import { Footer } from "@/components/footer"
 import { Header } from "@/components/header"
+import { isAnonymousGuest, getAnonymousGuestInfo, updateAnonymousGuestInfo } from "@/lib/anonymous-guest"
 
 const aladin = Aladin({
   weight: '400',
@@ -39,9 +40,11 @@ export default function ProfilePage() {
   useEffect(() => {
     const getUser = async () => {
       const { data: { user }, error } = await supabase.auth.getUser()
-      if (error || !user) {
+      const isAnon = await isAnonymousGuest()
+      
+      if (!user && !isAnon) {
         router.push("/auth/login")
-      } else {
+      } else if (user) {
         setUser(user)
 
         // Fetch Profile
@@ -74,6 +77,16 @@ export default function ProfilePage() {
           .eq('user_id', user.id)
 
         setUserBadges(badges || [])
+      } else if (isAnon) {
+        const guestInfo = await getAnonymousGuestInfo()
+        setUser({ isGuest: true, created_at: new Date().toISOString() })
+        setProfileData({
+          display_name: guestInfo?.display_name || "Anonymous Guest",
+          bio: "Guest user",
+          location: "",
+          website: ""
+        })
+        setUserBadges([])
       }
       setLoading(false)
     }
@@ -82,6 +95,12 @@ export default function ProfilePage() {
 
   const handleUpdateProfile = async () => {
     if (!user) return
+
+    if (user.isGuest) {
+      await updateAnonymousGuestInfo({ display_name: profileData.display_name })
+      setIsEditing(false)
+      return
+    }
 
     try {
       const { error } = await supabase
